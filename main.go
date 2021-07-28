@@ -14,5 +14,8 @@ func main() {
     r.GET("/list",func (c *gin.Context)  {
         c.String(http.StatusOK, "Hello World")
     })
+    r.GET("/listView",func (c *gin.Context)  {
+        c.String(http.StatusNotFound, "未发现页面")
+    })
     r.Run(":9000") 
 }
