@@ -17,5 +17,18 @@ func main() {
     r.GET("/listView",func (c *gin.Context)  {
         c.String(http.StatusNotFound, "未发现页面")
     })
+    r.GET("/yaml",func (c *gin.Context)  {
+        c.YAML(http.StatusOK,gin.H{"name":"patch 请求 yaml 格式化","age":18})
+      })
+      r.GET("/xml",func (c *gin.Context)  {
+        c.XML(http.StatusOK,gin.H{"name":"delete 请求 xml 格式化","age":18})
+      })
+      //get请求 html界面显示   http://localhost:8080/html
+  r.GET("/html",func (c *gin.Context)  {
+        // router.LoadHTMLGlob("../view/tem/index/*")  //这是前台的index
+        // router.LoadHTMLGlob("../view/tem/admin/*")  //这是后台的index
+        // router.LoadHTMLFiles("../view/tem/index.html")  //指定加载某些文件
+        c.HTML(http.StatusOK,"index.html",nil)
+      })
     r.Run(":9000") 
 }
