@@ -27,7 +27,7 @@ func main() {
   r.GET("/html",func (c *gin.Context)  {
         // router.LoadHTMLGlob("../view/tem/index/*")  //这是前台的index
         // router.LoadHTMLGlob("../view/tem/admin/*")  //这是后台的index
-        // router.LoadHTMLFiles("../view/tem/index.html")  //指定加载某些文件
+        r.LoadHTMLFiles("./index.html")  //指定加载某些文件
         c.HTML(http.StatusOK,"index.html",nil)
       })
     r.Run(":9000") 
