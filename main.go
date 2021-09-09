@@ -34,11 +34,7 @@ func main()  {
 }
 func checkout(response http.ResponseWriter, request *http.Request)  {
 	
-    response.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
-
-    response.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
-
-    response.Header().Set("content-type", "application/json")             //返回数据格式是json
+  
 	//解析URL参数
 	err := request.ParseForm()
 	if err != nil {
@@ -75,17 +71,13 @@ func checkout(response http.ResponseWriter, request *http.Request)  {
 }
 func getWxSign(w http.ResponseWriter, r *http.Request) {
 	
-    w.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
-
-    w.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
-
-    w.Header().Set("content-type", "application/json")             //返回数据格式是json
+  
 	fmt.Println(3242)
 	var (
 		noncestr, jsapi_ticket, timestamp, url, signature, signatureStr, access_token string
-		wxAccessToken                                                                 WxAccessToken
-		wxJsApiTicket                                                                 WxJsApiTicket
-		wxSignature                                                                   WxSignature
+		wxAccessToken WxAccessToken
+		wxJsApiTicket WxJsApiTicket
+		wxSignature WxSignature
 		wxSignRtn WxSignRtn
 	)
  
