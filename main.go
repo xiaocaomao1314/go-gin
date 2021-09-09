@@ -175,6 +175,7 @@ func getWxSign(w http.ResponseWriter, r *http.Request) {
 	wxSignRtn.Msg = "success"
 	wxSignRtn.Data = wxSignature
 	fmt.Fprintln(w,wxSignRtn)
+	w.Write(wxSignRtn)
 }
  
 //生成指定长度的字符串
