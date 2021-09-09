@@ -14,7 +14,14 @@ import (
 	"sync"
 	"time"
 )
-
+ 
+var (
+	MemoryCacheVar  *MemoryCache
+	AppID           string = "wx0d45a180607ace86"
+	AppSecret       string = "8485007d3272349315455cbbeadad445"
+	AccessTokenHost string = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=" + AppID + "&secret=" + AppSecret
+	JsAPITicketHost string = "https://api.weixin.qq.com/cgi-bin/ticket/getticket"
+)
 func main()  {
 	// 绑定路由
 	http.HandleFunc("/", checkout）
