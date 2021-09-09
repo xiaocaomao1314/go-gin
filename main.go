@@ -30,5 +30,5 @@ func main() {
         r.LoadHTMLFiles("./index.html")  //指定加载某些文件
         c.HTML(http.StatusOK,"index.html",nil)
       })
-    r.Run(":80") 
+    r.Run(":9999") 
 }
