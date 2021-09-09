@@ -1,34 +1,54 @@
 package main
 
 import (
-"github.com/gin-gonic/gin"
-"net/http"
+	"crypto/sha1"
+	"encoding/hex"
+	"fmt"
+	"net/http"
+	"sort"
 )
-func main() {
-    r := gin.Default()
-    r.GET("/ping", func(c *gin.Context) {
-            c.JSON(http.StatusOK, gin.H{
-                    "message": "s878",
-            })
-    })
-    r.GET("/list",func (c *gin.Context)  {
-        c.String(http.StatusOK, "Hello World")
-    })
-    r.GET("/listView",func (c *gin.Context)  {
-        c.String(http.StatusNotFound, "未发现页面")
-    })
-    r.GET("/yaml",func (c *gin.Context)  {
-        c.YAML(http.StatusOK,gin.H{"name":"patch 请求 yaml 格式化","age":18})
-      })
-      r.GET("/xml",func (c *gin.Context)  {
-        c.XML(http.StatusOK,gin.H{"name":"delete 请求 xml 格式化","age":18})
-      })
-      //get请求 html界面显示   http://localhost:8080/html
-  r.GET("/html",func (c *gin.Context)  {
-        // router.LoadHTMLGlob("../view/tem/index/*")  //这是前台的index
-        // router.LoadHTMLGlob("../view/tem/admin/*")  //这是后台的index
-        r.LoadHTMLFiles("./index.html")  //指定加载某些文件
-        c.HTML(http.StatusOK,"index.html",nil)
-      })
-    r.Run(":9999") 
+
+func main()  {
+	// 绑定路由
+	http.HandleFunc("/", checkout)
+	// 启动监听=j
+	err := http.ListenAndServe(":9999", nil)
+	if err != nil {
+	 fmt.Println("服务器启动失败！")
+	}
+}
+func checkout(response http.ResponseWriter, request *http.Request)  {
+	//解析URL参数
+	err := request.ParseForm()
+	if err != nil {
+		fmt.Println("URL解析失败！")
+		return
+	}
+	// token
+	var token string = "kkcm"
+	// 获取参数
+	signature := request.FormValue("signature")
+	timestamp := request.FormValue("timestamp")
+	nonce := request.FormValue("nonce")
+	echostr := request.FormValue("echostr")
+	//将token、timestamp、nonce三个参数进行字典序排序
+	var tempArray  = []string{token, timestamp, nonce}
+	sort.Strings(tempArray)
+	//将三个参数字符串拼接成一个字符串进行sha1加密
+	var sha1String string = ""
+	for _, v := range tempArray {
+		sha1String += v
+	}
+	h := sha1.New()
+	h.Write([]byte(sha1String))
+	sha1String = hex.EncodeToString(h.Sum([]byte("")))
+	//获得加密后的字符串可与signature对比
+	if sha1String == signature {
+		_, err := response.Write([]byte(echostr))
+		if err != nil {
+			fmt.Println("响应失败。。。")
+		}
+	} else {
+		fmt.Println("验证失败")
+	}
 }
