@@ -14,31 +14,7 @@ import (
 	"sync"
 	"time"
 )
-type WxAccessToken struct {
-	Access_token string `json:"access_token"`
-	Expires_in   int    `json:"expires_in"`
-	Errcode      int    `json:"errcode"`
-	Errmsg       string `json:"errmsg"`
-}
-type WxJsApiTicket struct {
-	Ticket     string `json:"ticket"`
-	Expires_in int    `json:"expires_in"`
-	Errcode    int    `json:"errcode"`
-	Errmsg     string `json:"errmsg"`
-}
-type WxSignature struct {
-	Noncestr  string `json:"noncestr"`
-	Timestamp string `json:"timestamp"`
-	Url       string `json:"url"`
-	Signature string `json:"signature"`
-	AppID     string `json:"appId"`
-}
- 
-type WxSignRtn struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data WxSignature `json:"data"`
-}
+
 var (
 	MemoryCacheVar  *MemoryCache
 	AppID           string = "wx0d45a180607ace86"
@@ -48,7 +24,7 @@ var (
 )
 func main()  {
 	// 绑定路由
-	// http.HandleFunc("/",checkout）
+	http.HandleFunc("/",checkout）
 	http.HandleFunc("/wx", getWxSign)
 	// 启动监听=j
 	err := http.ListenAndServe(":9999", nil)
@@ -223,7 +199,31 @@ func GetSha1(data string) string {
 	io.WriteString(t, data)
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
+ type WxAccessToken struct {
+	Access_token string `json:"access_token"`
+	Expires_in   int    `json:"expires_in"`
+	Errcode      int    `json:"errcode"`
+	Errmsg       string `json:"errmsg"`
+}
+type WxJsApiTicket struct {
+	Ticket     string `json:"ticket"`
+	Expires_in int    `json:"expires_in"`
+	Errcode    int    `json:"errcode"`
+	Errmsg     string `json:"errmsg"`
+}
+type WxSignature struct {
+	Noncestr  string `json:"noncestr"`
+	Timestamp string `json:"timestamp"`
+	Url       string `json:"url"`
+	Signature string `json:"signature"`
+	AppID     string `json:"appId"`
+}
  
+type WxSignRtn struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data WxSignature `json:"data"`
+}
 
  
 // 数据缓存处理
