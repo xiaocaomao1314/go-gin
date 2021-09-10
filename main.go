@@ -57,6 +57,13 @@ func main()  {
 	}
 }
 func checkout(response http.ResponseWriter, request *http.Request)  {
+	 
+
+    response.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
+
+    response.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
+
+    response.Header().Set("content-type", "application/json")   
 	
   
 	//解析URL参数
@@ -94,7 +101,13 @@ func checkout(response http.ResponseWriter, request *http.Request)  {
 	}
 }
 func getWxSign(w http.ResponseWriter, r *http.Request) {
-	
+	 
+
+    w.Header().Set("Access-Control-Allow-Origin", "*")             //允许访问所有域
+
+    w.Header().Add("Access-Control-Allow-Headers", "Content-Type") //header的类型
+
+    w.Header().Set("content-type", "application/json")   
   
 	fmt.Println(3242)
 
