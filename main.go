@@ -14,7 +14,31 @@ import (
 	"sync"
 	"time"
 )
+type WxAccessToken struct {
+	Access_token string `json:"access_token"`
+	Expires_in   int    `json:"expires_in"`
+	Errcode      int    `json:"errcode"`
+	Errmsg       string `json:"errmsg"`
+}
+type WxJsApiTicket struct {
+	Ticket     string `json:"ticket"`
+	Expires_in int    `json:"expires_in"`
+	Errcode    int    `json:"errcode"`
+	Errmsg     string `json:"errmsg"`
+}
+type WxSignature struct {
+	Noncestr  string `json:"noncestr"`
+	Timestamp string `json:"timestamp"`
+	Url       string `json:"url"`
+	Signature string `json:"signature"`
+	AppID     string `json:"appId"`
+}
  
+type WxSignRtn struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data WxSignature `json:"data"`
+}
 var (
 	MemoryCacheVar  *MemoryCache
 	AppID           string = "wx0d45a180607ace86"
@@ -24,7 +48,7 @@ var (
 )
 func main()  {
 	// 绑定路由
-	http.HandleFunc("/", checkout）
+	// http.HandleFunc("/",checkout）
 	http.HandleFunc("/wx", getWxSign)
 	// 启动监听=j
 	err := http.ListenAndServe(":9999", nil)
@@ -73,20 +97,21 @@ func getWxSign(w http.ResponseWriter, r *http.Request) {
 	
   
 	fmt.Println(3242)
+
+	query := r.URL.Query()
+var	url string= query.Get("url")
 	var (
-		noncestr, jsapi_ticket, timestamp, url, signature, signatureStr, access_token string
+		noncestr, jsapi_ticket, timestamp, signature, signatureStr, access_token string
 		wxAccessToken WxAccessToken
 		wxJsApiTicket WxJsApiTicket
 		wxSignature WxSignature
 		wxSignRtn WxSignRtn
 	)
  
-	query := r.URL.Query()
-	url = query["url"][0]
+	
 	
 	noncestr = RandStringBytes(16)
 	timestamp = strconv.FormatInt(time.Now().Unix(), 10)
- 
 	//获取access_token，如果缓存中有，则直接取出数据使用；否则重新调用微信端接口获取
 	client := &http.Client{}
 	if MemoryCacheVar.Get("access_token") == nil {
@@ -167,7 +192,6 @@ func getWxSign(w http.ResponseWriter, r *http.Request) {
 	wxSignRtn.Msg = "success"
 	wxSignRtn.Data = wxSignature
 	fmt.Fprintln(w,wxSignRtn)
-	w.Write(wxSignRtn)
 }
  
 //生成指定长度的字符串
@@ -187,31 +211,7 @@ func GetSha1(data string) string {
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
  
-type WxAccessToken struct {
-	Access_token string `json:"access_token"`
-	Expires_in   int    `json:"expires_in"`
-	Errcode      int    `json:"errcode"`
-	Errmsg       string `json:"errmsg"`
-}
-type WxJsApiTicket struct {
-	Ticket     string `json:"ticket"`
-	Expires_in int    `json:"expires_in"`
-	Errcode    int    `json:"errcode"`
-	Errmsg     string `json:"errmsg"`
-}
-type WxSignature struct {
-	Noncestr  string `json:"noncestr"`
-	Timestamp string `json:"timestamp"`
-	Url       string `json:"url"`
-	Signature string `json:"signature"`
-	AppID     string `json:"appId"`
-}
- 
-type WxSignRtn struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data WxSignature `json:"data"`
-}
+
  
 // 数据缓存处理
 type Item struct {
