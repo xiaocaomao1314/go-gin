@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-
 	wechat "github.com/silenceper/wechat/v2"
 	"github.com/silenceper/wechat/v2/cache"
 	offConfig "github.com/silenceper/wechat/v2/officialaccount/config"
@@ -13,8 +12,8 @@ import (
 func main() {
 	// 配置好路由
 	http.HandleFunc("/", serveWeachat)
-	fmt.Println("wechat server listener at", ":8090")
 	err := http.ListenAndServe(":8090", nil)
+	fmt.Println("wechat server listener at", ":8090")
 	if err != nil {
 		fmt.Printf("start server error , err=%v", err)
 	}
@@ -22,7 +21,7 @@ func main() {
 
 // 路由调用的函数
 func serveWeachat(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("请求一次我做了什么")
+ fmt.Println("请求一次我做了什么")
 	// fmt.Fprintln(rw,"我怎么看")
 	wc := wechat.NewWechat()
 	// 本地内存保存access_token
@@ -45,8 +44,10 @@ func serveWeachat(rw http.ResponseWriter, req *http.Request) {
 
 	err := server.Serve()
 	if err != nil {
-		fmt.Println(err)
+		
+		fmt.Println("错误是:",err)
 		return
 	}
 	server.Send()
 }
+// gbk转为utf-8
