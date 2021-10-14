@@ -71,8 +71,8 @@ const (
 //http.ResponseWriter : 回复http的对应
 //http.Request ： http请求的对象
 func sayHello(w http.ResponseWriter, r *http.Request) {
-	str, _ := os.Getwd()
-	fmt.Fprintln(w,str)
+	path, _ := os.Getwd()
+	fmt.Fprintln(w,path)
 	fmt.Println("http url ", r) //打印http的请求url
 	defer r.Body.Close()
 
