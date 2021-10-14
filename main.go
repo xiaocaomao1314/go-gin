@@ -22,7 +22,7 @@ func main() {
 // 路由调用的函数
 func serveWeachat(rw http.ResponseWriter, req *http.Request) {
  fmt.Println("请求一次我做了什么")
-	// fmt.Fprintln(rw,"我怎么看")
+	fmt.Fprintln(rw,"我怎么看这是什么")
 	wc := wechat.NewWechat()
 	// 本地内存保存access_token
 	memory := cache.NewMemory()
