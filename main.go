@@ -10,8 +10,8 @@ import (
 func main(){
 	// 配置好路由
 	http.HandleFunc("/",serveWeachat)
-	fmt.Println("wechat server listener at",":8081")
-	err:=http.ListenAndServe(":8081",nil)
+	fmt.Println("wechat server listener at",":80")
+	err:=http.ListenAndServe(":80",nil)
 	if err!=nil{
 		fmt.Printf("start server error , err=%v", err)
 	}
