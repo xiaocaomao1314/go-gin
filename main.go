@@ -22,17 +22,17 @@ func main() {
 
 // 路由调用的函数
 func serveWeachat(rw http.ResponseWriter, req *http.Request) {
-	fmt.Println("请求一次我做了什么")
+	fmt.Println("更新我看")
 	fmt.Fprintln(rw, "我怎么看这是什么")
 	wc := wechat.NewWechat()
 	// 本地内存保存access_token
 	memory := cache.NewMemory()
 	cfg := &offConfig.Config{
-		AppID:     "wx156ac2299ddaba11",
+		AppID: "wx156ac2299ddaba11",
 		AppSecret: "35693de7cc39c29f162b1c161c2db775",
 		Token:     "shuidi",
+		EncodingAESKey:"l1MxeqQfFOylpQQojS1XEB94VaUfUz3KUpjqwD0CJtn",
 		Cache:     memory,
-		EncodingAESKey:"l1MxeqQfFOylpQQojS1XEB94VaUfUz3KUpjqwD0CJtn"
 	}
 	officialAccount := wc.GetOfficialAccount(cfg)
 	server := officialAccount.GetServer(req, rw)
