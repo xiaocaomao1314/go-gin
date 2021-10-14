@@ -22,7 +22,7 @@ func main() {
 
 // 路由调用的函数
 func serveWeachat(rw http.ResponseWriter, req *http.Request) {
- fmt.Println("请求一次我做了什么")
+	fmt.Println("请求一次我做了什么")
 	// fmt.Fprintln(rw,"我怎么看")
 	wc := wechat.NewWechat()
 	// 本地内存保存access_token
@@ -30,7 +30,7 @@ func serveWeachat(rw http.ResponseWriter, req *http.Request) {
 	cfg := &offConfig.Config{
 		AppID:     "wx156ac2299ddaba11",
 		AppSecret: "35693de7cc39c29f162b1c161c2db775",
-		Token:     "caomao",
+		Token:     "shuidi",
 		Cache:     memory,
 	}
 	officialAccount := wc.GetOfficialAccount(cfg)
