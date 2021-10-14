@@ -61,6 +61,7 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
+	"os"
 )
 
 const (
@@ -70,7 +71,8 @@ const (
 //http.ResponseWriter : 回复http的对应
 //http.Request ： http请求的对象
 func sayHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w,"欢迎你来")
+	str, _ := os.Getwd()
+	fmt.Fprintln(w,str)
 	fmt.Println("http url ", r) //打印http的请求url
 	defer r.Body.Close()
 
