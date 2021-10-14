@@ -1,4 +1,4 @@
-module go-bin
+module go-gin
 
 go 1.17
 
