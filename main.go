@@ -57,20 +57,20 @@
 package main
 
 import (
+	"crypto/sha1"
 	"fmt"
 	"net/http"
 	"sort"
-	"crypto/sha1"
 )
 
 const (
-	token = "shuidi"    //跟微信公众平台的token一样即可
+	token = "shuidi" //跟微信公众平台的token一样即可
 )
 
 //http.ResponseWriter : 回复http的对应
 //http.Request ： http请求的对象
 func sayHello(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("http url ", r)			//打印http的请求url
+	fmt.Println("http url ", r) //打印http的请求url
 	defer r.Body.Close()
 
 	//1.尝试获取4个字段
@@ -103,21 +103,20 @@ func sayHello(w http.ResponseWriter, r *http.Request) {
 	//5. 判断hashcode是否等于signature
 	fmt.Println("url once my_signature signature", nonce, hashcode, signature)
 	if hashcode != signature {
-		return 
+		return
 	}
 
 	// 6. 如果等于就返回echostr
-	_, _ = w.Write([]byte(echostr) )		//这个就是往网页端输出的值
+	_, _ = w.Write([]byte(echostr)) //这个就是往网页端输出的值
 }
-
 
 func main() {
 	fmt.Println("服务器程序")
 
-	http.HandleFunc("/", sayHello)		// 匹配url的/就会调用sayHello
-	http.HandleFunc("/wx", sayHello)	// 匹配url的/wx就会调用sayHello
+	http.HandleFunc("/", sayHello)   // 匹配url的/就会调用sayHello
+	http.HandleFunc("/wx", sayHello) // 匹配url的/wx就会调用sayHello
 
-	err := http.ListenAndServe(":80", nil)	//这个就是绑定服务器的80端口
+	err := http.ListenAndServe(":8090", nil) //这个就是绑定服务器的80端口
 	if err != nil {
 		fmt.Println("ListenAndServer  error", err)
 	}
