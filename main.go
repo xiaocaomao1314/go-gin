@@ -32,6 +32,7 @@ func serveWeachat(rw http.ResponseWriter, req *http.Request) {
 		AppSecret: "35693de7cc39c29f162b1c161c2db775",
 		Token:     "shuidi",
 		Cache:     memory,
+		EncodingAESKey:"l1MxeqQfFOylpQQojS1XEB94VaUfUz3KUpjqwD0CJtn"
 	}
 	officialAccount := wc.GetOfficialAccount(cfg)
 	server := officialAccount.GetServer(req, rw)
