@@ -2,12 +2,13 @@
  * @Description:
  * @Date: 2021-10-15 09:54:06
  * @LastEditors: caomao
- * @LastEditTime: 2021-10-18 14:17:05
+ * @LastEditTime: 2021-10-18 15:42:23
  */
 package wx
 
 import (
 	"crypto/sha1"
+	"os"
 
 	"fmt"
 	"net/http"
@@ -67,6 +68,8 @@ func VerificationToken(w http.ResponseWriter, r *http.Request) {
  * @Description: 接收到通过公众号发送的消息
  */
 func ReceiveMessage(rw http.ResponseWriter, req *http.Request) {
+	path, _ := os.Executable()
+	fmt.Fprintln(rw,path)
 	wc := wechat.NewWechat()
 	//这里本地内存保存access_token，也可选择redis，memcache或者自定cache
 	memory := cache.NewMemory()
